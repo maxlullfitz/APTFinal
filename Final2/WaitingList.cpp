@@ -7,6 +7,13 @@ WaitingList::PatientRegister()
     length = 0;
 };
 
+WaitingList::getPatientInfoer()
+{
+    head = nullptr;
+    tail = nullptr;
+    length = 0;
+};
+
 int WaitingList::getLength() const
 {
     return length;

@@ -24,20 +24,19 @@ int PatientRegister::getLength() const
     return length;
 }
 
-bool PatientRegister::searchRegister(int registrationNumber) {
+int PatientRegister::searchRegister(int registrationNumber) {
     int registrationNumber = registationNumber;
-    bool returnBool = false;
     Patient* temp = this->head;
     int index = 0;
     // Loop through all nodes.
     while (!returnBool  && temp != nullptr) {
-        if (registrationNumber == temp->registationNumber) {
-            returnBool = true;
+        if (registrationNumber == temp->getregistationNumber()) {
+            returnBool = index;
         }
         temp = temp->next;
         index++;
     }
-    return returnBool;
+    return 0;
 }
 
 void PatientRegister::addFront(Patient* n)

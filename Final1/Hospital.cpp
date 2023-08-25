@@ -1,6 +1,6 @@
 #include "Patient.h"
 #include "PatientRegister.h"
-#include "WaitingList.h"
+//#include "WaitingList.h"
 #include <iostream>
 #include <string>
 #include <time.h>
@@ -11,11 +11,9 @@ std::string getInput(std::string prompt);
 
 void displayMainMenu();
 
-void newPatient(int registrationNumber);
+void newPatient(PatientRegister* patientRegister);
 
-void getPatientDetails(int registrationNumber);
-
-void printWaitingList(WaitingList* waitingList);
+//void printWaitingList(WaitingList* waitingList);
 
 void printPatientRegister(PatientRegister* patientRegister);
 
@@ -26,7 +24,7 @@ int getRegisterLength();
 int main(void)
 {
     // Generate new linkedlists
-    WaitingList waitingList = new WaitingList*[10];
+    //WaitingList waitingList = new WaitingList*[10];
     PatientRegister patientRegister = new PatientRegister*[10];;
     // delete waitingList;
     // delete patientRegister;
@@ -50,40 +48,38 @@ int main(void)
 
         if (choice == "1") {
             std::cout << "Adding a patient to the patient register..." << std::endl;
-            newPatient();
+            newPatient(patientRegister);
         }
 
 
-        else if (choice == "2") {
-            std::cout << "Adding a patient to the waiting list..." << std::endl;
-            loadGame();
-        }
+        // else if (choice == "2") {
+        //     std::cout << "Adding a patient to the waiting list..." << std::endl;
+        //     loadGame();
+        // }
 
         else if (choice == "3") {
             std::cout << "Showing patient information..." << std::endl;
-            showCredits();
+            printPatientInformation(int registationNumber);
         }
-
 
         else if (choice == "4") {
-            std::cout << "Showing patient register..." << std::endl;
-            programloop 
-            = false;
+            std::cout << "Showing patients in patient register..." << std::endl;
+            printPatientRegister(patientRegister);
         }
-        else if (choice == "5") {
-            std::cout << "Showing waiting list..." << std::endl;
-            programloop = false;
-        }
+        // else if (choice == "5") {
+        //     std::cout << "Showing waiting list..." << std::endl;
+        //     programloop = false;
+        // }
 
         else if (choice == "6") {
             std::cout << "Removing patient from register..." << std::endl;
-            programloop = false;
+            removePatientFromRegister(int patientNumber);
         }
 
-        else if (choice == "7") {
-            std::cout << "Removing patient from waiting list..." << std::endl;
-            programloop = false;
-        }
+        // else if (choice == "7") {
+        //     std::cout << "Removing patient from waiting list..." << std::endl;
+        //     programloop = false;
+        // }
 
         else if (choice == "8") {
             std::cout << "Quitting..." << std::endl;
@@ -92,7 +88,7 @@ int main(void)
 
         // EOF Character
         else if (std::cin.fail()) {
-            std::cout << "Exiting game, Goodbye!" << std::endl;
+            std::cout << "Exiting hostpial, Goodbye!" << std::endl;
             programloop = false;
         }
 
@@ -100,7 +96,6 @@ int main(void)
         else {
             std::cout << "Your choice was invalid." << std::endl;
         }
-
    }
 }
 
@@ -116,35 +111,35 @@ std::string getInput(std::string prompt)
     return temp;
 }
 
-void printWaitingList(WaitingList* waitingList) {
+// void printWaitingList(WaitingList* waitingList) {
     
-    Patient* temp = null;
-    std::cout << "\n"
-    std::string[] patientInfo;
-    std::vector<> admissionEntry;
-    int queuePosition = 0;
+//     Patient* temp = null;
+//     std::cout << "\n"
+//     std::string[] patientInfo;
+//     std::vector<> admissionEntry;
+//     int queuePosition = 0;
 
-    for (int i=0; i < waitingList->getLength(); i++) {
-        temp = waitinglist[i];
-        patientInfo = temp->getPatientInfo;
-        std::cout << "Patient name: " << patientInfo[0] << std::endl;
-        std::cout << "Patient date of birth: " << patientInfo[1] << std::endl;
-        std::cout << "Patient registration number: " << patientInfo[2] << std::endl;
+//     for (int i=0; i < waitingList->getLength(); i++) {
+//         temp = waitinglist[i];
+//         patientInfo = temp->getPatientInfo;
+//         std::cout << "Patient name: " << patientInfo[0] << std::endl;
+//         std::cout << "Patient date of birth: " << patientInfo[1] << std::endl;
+//         std::cout << "Patient registration number: " << patientInfo[2] << std::endl;
 
-        std::cout << "Patient queue position: " << i + 1;
+//         std::cout << "Patient queue position: " << i + 1;
 
-        admissionData = waitingList->getAdmissionHistory();
+//         admissionData = waitingList->getAdmissionHistory();
 
-        std::cout << "Date of admission: " << admissionData[0];
-        if (!admissionData[1] == "") {
-            std::cout << "Discharge Date: " << admissionData[1];
-        } else {
-            std::cout << "Patient has not yet been discharged." << std::endl;
-        }
-        std::cout << "Patient is in  the " << admissionData[2]<< << " ward."std::endl;
-        return;
-    }
-}
+//         std::cout << "Date of admission: " << admissionData[0];
+//         if (!admissionData[1] == "") {
+//             std::cout << "Discharge Date: " << admissionData[1];
+//         } else {
+//             std::cout << "Patient has not yet been discharged." << std::endl;
+//         }
+//         std::cout << "Patient is in  the " << admissionData[2]<< << " ward."std::endl;
+//         return;
+//     }
+// }
 
 void printPatientRegister(PatientRegister* patientRegister) {
     
@@ -163,17 +158,37 @@ void printPatientRegister(PatientRegister* patientRegister) {
 
         std::cout << "Patient queue position: " << i + 1;
 
-        admissionData = waitingList->getAdmissionHistory();
-
-        std::cout << "Date of admission: " << admissionData[0];
-        if (!admissionData[1] == "") {
-            std::cout << "Discharge Date: " << admissionData[1];
+        std::cout << "Date of admission: " << patientInfo[3] << std::endl;
+        if (!admissionData[4] == "") {
+            std::cout << "Date of admission: " << patientInfo[4] << std::endl;
         } else {
             std::cout << "Patient has not yet been discharged." << std::endl;
         }
-        std::cout << "Patient is in  the " << admissionData[2]<< << " ward."std::endl;
+        std::cout << "Patient is in the atient is in  the " << patientInfo[5] << " ward." << std::endl;
         return;
     }
+}
+
+void printPatientInformation() {
+    getRegistrationNumber();
+    int regNo = registrationNumber;
+    Patient* temp = null;
+    if (patientRegister->searchPatient(int regNo) > 0) {
+        temp = patientRegister[i];
+        patientInfo = temp->getPatientInfo();
+        std::cout << "Patient name: " << patientInfo[0] << std::endl;
+        std::cout << "Patient date of birth: " << patientInfo[1] << std::endl;
+        std::cout << "Patient registration number: " << patientInfo[2] << std::endl;
+        std::cout << "Date of admission: " << patientInfo[3] << std::endl;
+        if (!admissionData[4] == "") {
+            std::cout << "Date of discharge: " << patientInfo[4] << std::endl;
+        } else {
+            std::cout << "Patient has not yet been discharged." << std::endl;
+        }
+        std::cout << "Patient is in the atient is in  the " << patientInfo[5] << " ward." << std::endl;
+        return;
+    }
+    return;
 }
 
 // Display main menu
@@ -202,25 +217,32 @@ std::string getInput(std::string prompt)
     return temp;
 }
 
-void newPatient(){
-    std::string name;
-    std::string dob;
-    int registrationNumber =  PatientRegister->getLength() + 1000000;
-    name = getPatientName();
+void newPatient(registrationList){
+    std::vector<> patientInfo;
+
+    
+    patientInfo[0] = getInput("Enter the patient name");
+    int registrationNumber =  patientRegister->getLength() + 1;
+    patientInfo[1] = std::to_string(registrationNumber);
     std::cout << name << "your registration number is " << registrationNumber << std::endl;
-    dob = getInput("Enter the patient date of birth seperated by a - as shown in this format -> 10-01-2003");
+    patientInfo[2] = getInput("Enter the patient date of birth seperated by a - as shown in this format -> 10-01-2003");
+    patientInfo[3] = getInput("Enter the current day");
+    patientInfo[4] = getInput("Enter the date that the patient will be discharged");
+    patientInfo[5] = getInput("Enter the patient's ward");
+    Patient patient = new Patient(patientInfo);
 
-    Patient patient = new Patient(std::string& name, const std::string& dob, int registrationNumber, std::vector<AdmissionEntry> admissionHistory);
+    registrationList->addBack(patient);
+
 }
 
-void addPatientToWaitingList(int RegistrationNumber, Patient* patient){
-    int registrationNumber = RegistrationNumber;
-    if (waitingList->searchPatient(registrationNumber)){
-        std::cout << name << "Patient is already in waiting list " << std::endl;
-    } else {
-        waitingList->addBack(patient);
-    }
-}
+// void addPatientToWaitingList(int RegistrationNumber, Patient* patient){
+//     int registrationNumber = RegistrationNumber;
+//     if (waitingList->searchPatient(registrationNumber)){
+//         std::cout << name << "Patient is already in waiting list " << std::endl;
+//     } else {
+//         waitingList->addBack(patient);
+//     }
+// }
 
 
 void showWaitingList(){
@@ -241,7 +263,8 @@ int getRegisterLength(){
     return;
 }
 
-std::string removePatientFromRegister(int patientNumber){
+std::string removePatientFromRegister(){
+    getRegistrationNumber();
     int patientNumber = patientNumber;
     if (searchPatientInRegister) {
 
@@ -251,7 +274,7 @@ std::string removePatientFromRegister(int patientNumber){
     return;
 }
 
-int getRegistrationNumber() {
+std::string getRegistrationNumber() {
     int registrationNumber = 0;
     std::string registrationNo;
     bool validNumber = false;
@@ -276,23 +299,18 @@ void removePatientFromWaitingList(int patientNumber){
     return;
 }
 
-bool searchPatientInQueue(int patientNumber){
-    if (patientRegister->searchPatient()) {
+bool searchPatientInQueue(){
+    getRegistrationNumber();
+    if (searchPatient(int registrationNumber) > 0) {
         return true;
-    } else {return false; }
+    } 
+    return false;
 }
 
-bool searchPatientInList(int patientNumber){
+bool searchPatientInList(int patientNumber, PatientRegister* patientRegister){
     int patientNumber = patientNumber;
-    if (waitingList->searchPatient(patientNumber)) {
+    if (patientRegister->searchPatient(patientNumber)) {
         return true;
-    } else {return false;}
-}
-
-std::vector<std::string> getAdmissionHistory(){
-    std::vector<std::string> admissionData;
-    admissionData[0] = getInput("Enter the date of admission");
-    admissionData[1] = getInput("Enter the discharge date (leave blank if not applicable)");
-    admissionData[2] = getInput("Enter the admission ward");
-    return admissionData;
+    } 
+    return false;
 }

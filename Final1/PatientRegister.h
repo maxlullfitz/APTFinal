@@ -9,7 +9,9 @@ public:
    int getLength(int i);
 
    void addBack(Patient* patient);
-   bool searchPatient(int registrationNumber);
+   int searchPatient(int registrationNumber);
+
+   std::vector<std::string> getPatientInfo(int registrationNumber);
    
    void deleteFront();
    void deleteBack();

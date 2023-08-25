@@ -3,18 +3,20 @@
 class Patient
 {
    public:
-   Patient(std::string[] patientInfo, std::vector<AdmissionEntry> admissionHistory);
-   getPatient(int registrationNumber);
-   searchPatient(int registrationNumber);
-   getPatientInfo(int registrationNumber);
-  
+   Patient(std::vector<AdmissionEntry> patientInfo);
+
+   Patient* getPatient(int registrationNumber);
+
+   int searchPatient(int registrationNumber);
+
+   std::vector<std::string> getPatientInfo(int registrationNumber);
 
    private:
+   std::string name;
+   std::string dob;
+   std::string registrationNumber;
    std::string admissionDate;
    std::string dischargeDate;
    std::string ward;
-   std::string name;
-   std::string dob;
-   int registrationNumber;
-   std::vector<AdmissionEntry> admissionHistory;
+
 };
