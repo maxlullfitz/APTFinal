@@ -147,4 +147,31 @@ int PatientRegister::getPatientLocation(int registrationNumber)
     return -1; // Return -1 if not found
 }
 
+void printPatientRegister(PatientRegister* patientRegister) {
+    Patient* temp = patientRegister->head; // Use patientRegister->head instead of temp
+    for (int i = 0; i < patientRegister->getLength(); i++) {
+        std::vector<std::string> patientInfo = temp->getPatientInfo();
+        std::cout << "Patient name: " << patientInfo[0] << std::endl;
+        std::cout << "Patient date of birth: " << patientInfo[2] << std::endl;
+        // Skip printing patient registration number
+        std::cout << "Patient queue position: " << i + 1 << std::endl;
+        std::cout << "Date of admission: " << patientInfo[3] << std::endl;
+        std::cout << "Date of discharge: " << patientInfo[4] << std::endl;
+        std::cout << "Patient is in the " << patientInfo[5] << " ward." << std::endl;
 
+        temp = temp->next; // Move to the next patient in the linked list
+    }
+}
+
+Patient* getPatientByRegistrationNumber(int registrationNumber) {
+   Patient* temp = head; // Start from the head of the linked list
+
+   while (temp != nullptr) {
+      if (temp->getRegistrationNumber() == registrationNumber) {
+         return temp; // Return the patient pointer if registration number matches
+      }
+      temp = temp->next; // Move to the next patient
+   }
+
+    return nullptr; // Return nullptr if no patient with the given registration number is found
+}

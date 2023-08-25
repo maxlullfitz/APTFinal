@@ -2,13 +2,15 @@
 class PatientRegister
 {
 public:
-   LinkedList();
-   ~LinkedList();
+   PatientRegister();  // Constructor
+   ~PatientRegister(); // Destructor
 
    int getLength();
 
    void addBack(Patient* patient);
    int searchRegister(int registrationNumber);
+   void printPatientRegister(PatientRegister* patientRegister);
+   Patient* getPatientByRegistrationNumber(int registrationNumber);
 
    std::vector<std::string> getPatientInfo(int registrationNumber);
    int getPatient(int location);
