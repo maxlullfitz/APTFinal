@@ -60,6 +60,7 @@ public:
     Time& operator+=(const Time& other);
     const int& operator[](char unit) const;
     int& operator[](char unit);
+    unsigned int operator[](char unit) const;
 
     friend std::ostream& operator<<(std::ostream& os, const Time& time);
 

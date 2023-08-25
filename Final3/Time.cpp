@@ -118,7 +118,7 @@ bool Time::operator<(const Time& other) const {
     return this->second < other.second;
 }
 
-const int& Time::operator[](char unit) const {
+unsigned int Time::operator[](char unit) const {
     if (unit == 'h') {
         return hour;
     } else if (unit == 'm') {
