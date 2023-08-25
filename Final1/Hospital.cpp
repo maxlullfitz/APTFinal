@@ -1,7 +1,6 @@
 #include "Patient.h"
 #include "PatientRegister.h"
 #include "WaitingList.h"
-#include <fstream>
 #include <iostream>
 #include <string>
 #include <time.h>
@@ -16,11 +15,9 @@ void newPatient(int registrationNumber);
 
 void getPatientDetails(int registrationNumber);
 
-void showWaitingList(Game* game);
+void printWaitingList(WaitingList* waitingList);
 
-void showPatientRegister(Game* game);
-
-void showWaitingList(Game* game);;
+void printPatientRegister(PatientRegister* patientRegister);
 
 int getQueueLength();
 
@@ -28,12 +25,11 @@ int getRegisterLength();
 
 int main(void)
 {
-    WaitingList waitingList = new WaitingList;
-    PatientRegister patientRegister = new Patientregister;
-    // Generate new linkedlist
-    LinkedList* list = new LinkedList();
-    delete list;
-
+    // Generate new linkedlists
+    WaitingList waitingList = new WaitingList*[10];
+    PatientRegister patientRegister = new PatientRegister*[10];;
+    // delete waitingList;
+    // delete patientRegister;
     bool programloop = true;
 
     // Welcome message
@@ -54,7 +50,7 @@ int main(void)
 
         if (choice == "1") {
             std::cout << "Adding a patient to the patient register..." << std::endl;
-            startNewGame();
+            newPatient();
         }
 
 
@@ -62,7 +58,6 @@ int main(void)
             std::cout << "Adding a patient to the waiting list..." << std::endl;
             loadGame();
         }
-
 
         else if (choice == "3") {
             std::cout << "Showing patient information..." << std::endl;
@@ -121,9 +116,65 @@ std::string getInput(std::string prompt)
     return temp;
 }
 
-void showWaitingList(Game* game);
+void printWaitingList(WaitingList* waitingList) {
+    
+    Patient* temp = null;
+    std::cout << "\n"
+    std::string[] patientInfo;
+    std::vector<> admissionEntry;
+    int queuePosition = 0;
 
-void showPatientRegister(Game* game);
+    for (int i=0; i < waitingList->getLength(); i++) {
+        temp = waitinglist[i];
+        patientInfo = temp->getPatientInfo;
+        std::cout << "Patient name: " << patientInfo[0] << std::endl;
+        std::cout << "Patient date of birth: " << patientInfo[1] << std::endl;
+        std::cout << "Patient registration number: " << patientInfo[2] << std::endl;
+
+        std::cout << "Patient queue position: " << i + 1;
+
+        admissionData = waitingList->getAdmissionHistory();
+
+        std::cout << "Date of admission: " << admissionData[0];
+        if (!admissionData[1] == "") {
+            std::cout << "Discharge Date: " << admissionData[1];
+        } else {
+            std::cout << "Patient has not yet been discharged." << std::endl;
+        }
+        std::cout << "Patient is in  the " << admissionData[2]<< << " ward."std::endl;
+        return;
+    }
+}
+
+void printPatientRegister(PatientRegister* patientRegister) {
+    
+    Patient* temp = null;
+    std::cout << "\n"
+    std::string[] patientInfo;
+    std::vector<> admissionEntry;
+    int queuePosition = 0;
+
+    for (int i=0; i < patientRegister->getLength(); i++) {
+        temp = patientRegister[i];
+        patientInfo = temp->getPatientInfo;
+        std::cout << "Patient name: " << patientInfo[0] << std::endl;
+        std::cout << "Patient date of birth: " << patientInfo[1] << std::endl;
+        std::cout << "Patient registration number: " << patientInfo[2] << std::endl;
+
+        std::cout << "Patient queue position: " << i + 1;
+
+        admissionData = waitingList->getAdmissionHistory();
+
+        std::cout << "Date of admission: " << admissionData[0];
+        if (!admissionData[1] == "") {
+            std::cout << "Discharge Date: " << admissionData[1];
+        } else {
+            std::cout << "Patient has not yet been discharged." << std::endl;
+        }
+        std::cout << "Patient is in  the " << admissionData[2]<< << " ward."std::endl;
+        return;
+    }
+}
 
 // Display main menu
 void displayMainMenu()
@@ -154,8 +205,7 @@ std::string getInput(std::string prompt)
 void newPatient(){
     std::string name;
     std::string dob;
-    std::string dob;
-    int registrationNumber =  patientRegister->getLength() + 1000000;
+    int registrationNumber =  PatientRegister->getLength() + 1000000;
     name = getPatientName();
     std::cout << name << "your registration number is " << registrationNumber << std::endl;
     dob = getInput("Enter the patient date of birth seperated by a - as shown in this format -> 10-01-2003");
@@ -163,9 +213,15 @@ void newPatient(){
     Patient patient = new Patient(std::string& name, const std::string& dob, int registrationNumber, std::vector<AdmissionEntry> admissionHistory);
 }
 
-void getPatientInformation(){
-
+void addPatientToWaitingList(int RegistrationNumber, Patient* patient){
+    int registrationNumber = RegistrationNumber;
+    if (waitingList->searchPatient(registrationNumber)){
+        std::cout << name << "Patient is already in waiting list " << std::endl;
+    } else {
+        waitingList->addBack(patient);
+    }
 }
+
 
 void showWaitingList(){
     waitinglist->getLength();
@@ -202,7 +258,7 @@ int getRegistrationNumber() {
     while (!validNumber){
         registrationNo = getInput("Enter the patient number between 1,000,000 and 9,999,999");
         registrationNumber = std::stoi(registrationNo);
-        if (registrationNumber > 100000 && registrationNumber < 10000000) {
+        if (registrationNumber > 1000000 && registrationNumber < 10000000) {
             validNumber = true;
         }
     }
@@ -223,17 +279,14 @@ void removePatientFromWaitingList(int patientNumber){
 bool searchPatientInQueue(int patientNumber){
     if (patientRegister->searchPatient()) {
         return true;
-    } else (
-        return false;
-    )
+    } else {return false; }
 }
 
 bool searchPatientInList(int patientNumber){
-    if (waitingList->searchPatient()) {
+    int patientNumber = patientNumber;
+    if (waitingList->searchPatient(patientNumber)) {
         return true;
-    } else (
-        return false;
-    )
+    } else {return false;}
 }
 
 std::vector<std::string> getAdmissionHistory(){

@@ -1,4 +1,4 @@
-#include "Node.h"
+
 
 class WaitingList
 {
@@ -25,5 +25,5 @@ public:
    void deleteAt(int registrationNumber);
 
 private:
-   Node* head;
+   Patient* head;
 };

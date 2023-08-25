@@ -1,10 +1,12 @@
-#include "Node.h"
+
 
 class Patient
 {
    public:
-   Patient(std::string& name, const std::string& dob, int registrationNumber, std::vector<AdmissionEntry> admissionHistory);
-   showPatientInformation(int registrationNumber);
+   Patient(std::string[] patientInfo, std::vector<AdmissionEntry> admissionHistory);
+   getPatient(int registrationNumber);
+   searchPatient(int registrationNumber);
+   getPatientInfo(int registrationNumber);
   
 
    private:

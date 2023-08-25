@@ -1,12 +1,12 @@
-.default: all
+.DEFAULT: all
 
-all: qwirkle
+all: Hospital
 
 clean:
 	rm -rf Hospital *.o *.dSYM
 
-Hospital: Patient.o PatientRegister.o Waiting.o Hospital
+Hospital: Hospital.o Patient.o PatientRegister.o WaitingList.o
 	g++ -Wall -Werror -std=c++14 -g -O -o $@ $^
 
 %.o: %.cpp
-	g++ -Wall -Werror -std=c++14 -g -O -c $^
+	g++ -Wall -Werror -std=c++14 -g -O -c -o $@ $^

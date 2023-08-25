@@ -7,6 +7,18 @@ PatientRegister::PatientRegister()
    length = 0;
 };
 
+PatientRegister::~LinkedList()
+{
+    // Loop through all nodes and delete each one.
+    Patient* temp = head;
+    for (int i = 0; i < length; i++) {
+        Node* tempNext = temp->next;
+        delete temp->tile;
+        delete temp;
+        temp = tempNext;
+    }
+}
+
 int PatientRegister::getLength() const
 {
     return length;
@@ -15,7 +27,7 @@ int PatientRegister::getLength() const
 bool PatientRegister::searchRegister(int registrationNumber) {
     int registrationNumber = registationNumber;
     bool returnBool = false;
-    Node* temp = this->head;
+    Patient* temp = this->head;
     int index = 0;
     // Loop through all nodes.
     while (!returnBool  && temp != nullptr) {
@@ -30,8 +42,8 @@ bool PatientRegister::searchRegister(int registrationNumber) {
 
 void PatientRegister::addFront(Patient* n)
 {
-    // Initialize the new node.
-    Patient* temp = new Patient(n, nullptr);
+   // Initialize the new node.
+   Patient* temp = new Patient(n, nullptr);
 
     if (this->head == nullptr) {
         // If the list is empty, set the head and tail to the new node.
@@ -75,7 +87,7 @@ void PatientRegister::deleteBack()
         throw std::range_error("Delete Back Operation on Empty LinkedList.");
     }
     if (this->head == this->tail) {
-        returnVar = head->tile;
+
         // There is only one node in the list.
         delete this->head;
         this->head = nullptr;

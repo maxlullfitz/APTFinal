@@ -1,4 +1,4 @@
-#include "Node.h"
+
 
 class PatientRegister
 {
@@ -8,7 +8,7 @@ public:
 
    int getLength(int i);
 
-   void addBack(int data);
+   void addBack(Patient* patient);
    bool searchPatient(int registrationNumber);
    
    void deleteFront();
@@ -19,5 +19,5 @@ public:
    void deleteAt(int i);
 
 private:
-   Node* head;
+   Patient* head;
 };
