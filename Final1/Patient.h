@@ -1,22 +1,18 @@
+#include <vector>
+#include <string>
 
+class Patient {
+public:
+    Patient(std::vector<std::string> admissionHistory);
+    int searchPatient(int registrationNumber);
+    std::vector<std::string> getPatientInfo(int registrationNumber);
+    std::string getRegistrationumber();
 
-class Patient
-{
-   public:
-   Patient(std::vector<AdmissionEntry> patientInfo);
-
-   Patient* getPatient(int registrationNumber);
-
-   int searchPatient(int registrationNumber);
-
-   std::vector<std::string> getPatientInfo(int registrationNumber);
-
-   private:
-   std::string name;
-   std::string dob;
-   std::string registrationNumber;
-   std::string admissionDate;
-   std::string dischargeDate;
-   std::string ward;
-
+private:
+    std::string name;
+    std::string dob;
+    std::string registrationNumber;  
+    std::string admissionDate;
+    std::string dischargeDate;
+    std::string ward;
 };

@@ -7,14 +7,13 @@ PatientRegister::PatientRegister()
    length = 0;
 };
 
-PatientRegister::~LinkedList()
+PatientRegister::~PatientRegister()
 {
     // Loop through all nodes and delete each one.
-    Patient* temp = head;
-    for (int i = 0; i < length; i++) {
-        Node* tempNext = temp->next;
-        delete temp->tile;
-        delete temp;
+    PatientRegister* temp = head;
+    while (temp != nullptr) {
+        Patient* tempNext = temp->next;  
+        delete temp;  
         temp = tempNext;
     }
 }
@@ -24,25 +23,25 @@ int PatientRegister::getLength() const
     return length;
 }
 
-int PatientRegister::searchRegister(int registrationNumber) {
-    int registrationNumber = registationNumber;
-    Patient* temp = this->head;
+int PatientRegister::searchRegister(int registrationNumber)
+{
+    PatientRegister* temp = head;
     int index = 0;
     // Loop through all nodes.
-    while (!returnBool  && temp != nullptr) {
-        if (registrationNumber == temp->getregistationNumber()) {
-            returnBool = index;
+    while (temp != nullptr) {
+        if (registrationNumber == temp->getPatientInfo[2]) {
+            return index;  // Return the index if found
         }
         temp = temp->next;
         index++;
     }
-    return 0;
+    return -1;  // Return -1 if not found
 }
 
 void PatientRegister::addFront(Patient* n)
 {
    // Initialize the new node.
-   Patient* temp = new Patient(n, nullptr);
+   PatientRegister* temp = new Patient(n, nullptr);
 
     if (this->head == nullptr) {
         // If the list is empty, set the head and tail to the new node.
@@ -93,7 +92,7 @@ void PatientRegister::deleteBack()
         this->tail = nullptr;
     } else {
         returnVar = tail->tile;
-        Node* temp = this->head;
+        PatientRegister* temp = this->head;
         // Find the second last node.
         while (temp->next != this->tail) {
             temp = temp->next;
@@ -118,16 +117,34 @@ void PatientRegister::deletePatient(int location)
     } else if (location == length - 1) {
         return deleteBack();
     } else {
-        Node* temp = head;
+        Patient* temp = head;
         // Find the node previous to the deletion location.
         for (int i = 0; i < location - 1; i++) {
             temp = temp->next;
         }
         returnVar = temp->next->tile;
         // Delete the node and decrement the length.
-        Node* deleteNode = temp->next;
+        PatientRegister* deleteNode = temp->next;
         temp->next = temp->next->next;
         delete deleteNode;
         length--;
     }
 }
+
+int PatientRegister::getPatientLocation(int registrationNumber) 
+{
+    Node* temp = head;
+    int index = 0;
+
+    while (temp != nullptr) {
+        if (temp->tile->getRegistrationNumber() == registrationNumber) {
+            return index; // Return the index if found
+        }
+        temp = temp->next;
+        index++;
+    }
+
+    return -1; // Return -1 if not found
+}
+
+
