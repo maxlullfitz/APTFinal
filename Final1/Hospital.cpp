@@ -11,7 +11,7 @@ std::string getInput(std::string prompt);
 
 void displayMainMenu();
 
-void newPatient(std::vector<std::string> admissionEntry);
+void newPatient(PatientRegister* patientRegister);
 
 //void printWaitingList(WaitingList* waitingList);
 
@@ -21,6 +21,8 @@ void printPatientInformation(PatientRegister* patientRegister);
 
 int getRegistrationNumber();
 
+void removePatientFromRegister (PatientRegister* patientRegister);
+
 int getQueueLength();
 
 int getRegisterLength(PatientRegister* patientRegister);
@@ -28,9 +30,8 @@ int getRegisterLength(PatientRegister* patientRegister);
 int main(void)
 {
     // Generate new linkedlists
-    //WaitingList waitingList = new WaitingList*[10];
-    PatientRegister patientRegister = new PatientRegister*[10];;
-    this->patientRegister - patientRegister;
+
+    PatientRegister* patientRegister = new PatientRegister;
     // delete waitingList;
     // delete patientRegister;
     bool programloop = true;
@@ -56,7 +57,6 @@ int main(void)
             newPatient(patientRegister);
         }
 
-
         // else if (choice == "2") {
         //     std::cout << "Adding a patient to the waiting list..." << std::endl;
         //     loadGame();
@@ -64,7 +64,7 @@ int main(void)
 
         else if (choice == "3") {
             std::cout << "Showing patient information..." << std::endl;
-            printPatientInformation();
+            printPatientInformation(patientRegister);
         }
 
         else if (choice == "4") {
@@ -78,7 +78,7 @@ int main(void)
 
         else if (choice == "6") {
             std::cout << "Removing patient from register..." << std::endl;
-            removePatientFromRegister();
+            removePatientFromRegister(patientRegister);
         }
 
         // else if (choice == "7") {
@@ -136,40 +136,23 @@ int main(void)
 // }
 
 void printPatientRegister(PatientRegister* patientRegister) {
-    Patient* temp = nullptr;
-    std::vector<std::string> patientInfo; 
-
-    for (int i = 0; i < patientRegister->getLength(); i++) {
-        temp = patientRegister->getPatient(i); 
-        patientInfo = temp->getPatientInfo(); 
-
-        std::cout << "Patient name: " << patientInfo[0] << std::endl;
-        std::cout << "Patient date of birth: " << patientInfo[2] << std::endl;
-        std::cout << "Patient registration number: " << patientInfo[1] << std::endl;
-
-        std::cout << "Patient queue position: " << i + 1 << std::endl;
-
-        std::cout << "Date of admission: " << patientInfo[3] << std::endl;
-        std::cout << "Date of discharge: " << patientInfo[4] << std::endl;
-        std::cout << "Patient is in the " << patientInfo[5] << " ward." << std::endl;
-    }
+    patientRegister->printPatientRegister(patientRegister);
 }
 
 void printPatientInformation(PatientRegister* patientRegister) {
-
     int regNo = getRegistrationNumber();
-    Patient* temp = nullptr;
-    if (patientRegister->searchRegister(regNo) > 0) {
-        std::vector<std::string> patientInfo = temp->getPatientInfo(regNo);
+    Patient* foundPatient = patientRegister->getPatientByRegistrationNumber(regNo); 
+    if (foundPatient != nullptr) {
+        std::vector<std::string> patientInfo = foundPatient->getPatientInfo();
         std::cout << "Patient name: " << patientInfo[0] << std::endl;
         std::cout << "Patient date of birth: " << patientInfo[1] << std::endl;
         std::cout << "Patient registration number: " << patientInfo[2] << std::endl;
         std::cout << "Date of admission: " << patientInfo[3] << std::endl;
         std::cout << "Date of discharge: " << patientInfo[4] << std::endl;
-        std::cout << "Patient is in the atient is in  the " << patientInfo[5] << " ward." << std::endl;
-        return;
+        std::cout << "Patient is in the " << patientInfo[5] << " ward." << std::endl;
+    } else {
+        std::cout << "Patient not found in register" << std::endl;
     }
-    return;
 }
 
 // Display main menu
@@ -200,7 +183,7 @@ std::string getInput(std::string prompt)
 
 void newPatient(PatientRegister* patientRegister){
     std::vector<std::string> admissionEntry(6);
-        
+    
     admissionEntry[0] = getInput("Enter the patient name");
     int registrationNumber =  patientRegister->getLength() + 1;
     admissionEntry[1] = std::to_string(registrationNumber);
